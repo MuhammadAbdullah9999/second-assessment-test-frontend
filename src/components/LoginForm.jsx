@@ -19,7 +19,7 @@ const LoginForm = ({ setUser }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', { username, password });
+      const response = await axios.post('https://second-assessment-test-backend.onrender.com/auth/login', { username, password });
       setUser(response.data);
       navigate('/discussion');
 

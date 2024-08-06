@@ -9,7 +9,7 @@ const CalculationTree = ({ user, refresh }) => {
   useEffect(() => {
     const fetchCalculations = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/calculations');
+        const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations');
         console.log(response.data);
         setCalculations(response.data);
       } catch (error) {
@@ -26,7 +26,7 @@ const CalculationTree = ({ user, refresh }) => {
 
   const refreshCalculations = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/calculations');
+      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations');
       setCalculations(response.data);
       console.log(response.data);
 

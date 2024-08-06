@@ -19,7 +19,7 @@ const RegisterForm = ({ setUser }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/auth/register', { username, password });
+      const response = await axios.post('https://second-assessment-test-backend.onrender.com/auth/register', { username, password });
       setUser(response.data);
       navigate('/discussion');
     } catch (error) {

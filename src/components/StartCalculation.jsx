@@ -7,7 +7,7 @@ const StartCalculation = ({ user, handleRefresh }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/calculations/start', {
+      await axios.post('https://second-assessment-test-backend.onrender.com/calculations/start', {
         userId: user.id,
         number: parseFloat(number),
       });
