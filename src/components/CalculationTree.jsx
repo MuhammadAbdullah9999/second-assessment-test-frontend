@@ -2,38 +2,36 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddOperation from './AddOperation';
 
-const CalculationTree = ({ user, refresh }) => {
+const CalculationTree = ({ user }) => {
   const [calculations, setCalculations] = useState([]);
   const [selectedCalculationId, setSelectedCalculationId] = useState(null);
 
-  useEffect(() => {
-    const fetchCalculations = async () => {
-      try {
-        const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations');
-        console.log(response.data);
-        setCalculations(response.data);
-      } catch (error) {
-        console.error('Error fetching calculations:', error);
-      }
-    };
-
-    fetchCalculations();
-  }, [refresh]);
-
-  const handleAddOperationClick = (calculationId) => {
-    setSelectedCalculationId(calculationId);
+  const fetchCalculations = async () => {
+    try {
+      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations', {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      setCalculations(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching calculations:', error);
+    }
   };
 
   const refreshCalculations = async () => {
-    try {
-      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations');
-      setCalculations(response.data);
-      console.log(response.data);
+    console.log('Refreshing calculations...');
+    await fetchCalculations();
+    console.log('Calculations refreshed:', calculations);
+  };
 
-      setSelectedCalculationId(null); 
-    } catch (error) {
-      console.error('Error refreshing calculations:', error);
-    }
+  useEffect(() => {
+    fetchCalculations();
+  }, []);
+
+  const handleAddOperationClick = (calculationId) => {
+    setSelectedCalculationId(calculationId);
   };
 
   const renderOperations = (operations) => {
@@ -69,7 +67,7 @@ const CalculationTree = ({ user, refresh }) => {
   };
 
   const renderCalculationTree = (calculation) => (
-    <div key={calculation.id} className="mb-4 p-4 border rounded-md bg-white shadow-lg">
+    <div key={calculation.id} className=" mb-4 p-4 border rounded-md bg-white shadow-lg">
       <div className="flex items-center space-x-2">
         <span className="font-bold">{calculation.number}</span>
         <span className="text-gray-500 ml-4">by {calculation.username}</span>
@@ -101,11 +99,9 @@ const CalculationTree = ({ user, refresh }) => {
       <div className="p-4 bg-white rounded-md shadow-md w-4/5 max-w-4xl">
         <h2 className="text-2xl font-bold mb-4 text-center">Calculation Tree</h2>
         {calculations.length === 0 ? (
-          <p className="text-center text-gray-500">No calculations to show !!!.</p>
+          <div className="text-center text-gray-500">No calculations to show.</div>
         ) : (
-          <div>
-            {calculations.map(renderCalculationTree)}
-          </div>
+          calculations.map(renderCalculationTree)
         )}
       </div>
     </div>

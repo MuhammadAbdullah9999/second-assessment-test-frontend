@@ -22,6 +22,7 @@ const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber }
     setError('');
     
     try {
+      console.log('Adding operation...', { userId: user.id, calculationId, operation, number: parseFloat(number), parentNumber });
       await axios.post('https://second-assessment-test-backend.onrender.com/operations', {
         userId: user.id,
         calculationId,
@@ -29,7 +30,9 @@ const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber }
         number: parseFloat(number),
         parentNumber
       });
-      refreshCalculations();
+
+      console.log('Operation added successfully.');
+      refreshCalculations(); 
       setOperation('');
       setNumber('');
     } catch (error) {
