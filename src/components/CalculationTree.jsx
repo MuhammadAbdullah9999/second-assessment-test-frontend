@@ -10,7 +10,7 @@ const CalculationTree = ({ user, refresh }) => {
     const fetchCalculations = async () => {
       try {
         const response = await axios.get('http://localhost:5000/calculations');
-        console.log(response.data)
+        console.log(response.data);
         setCalculations(response.data);
       } catch (error) {
         console.error('Error fetching calculations:', error);
@@ -28,7 +28,7 @@ const CalculationTree = ({ user, refresh }) => {
     try {
       const response = await axios.get('http://localhost:5000/calculations');
       setCalculations(response.data);
-      console.log(response.data)
+      console.log(response.data);
 
       setSelectedCalculationId(null); 
     } catch (error) {
@@ -69,7 +69,7 @@ const CalculationTree = ({ user, refresh }) => {
   };
 
   const renderCalculationTree = (calculation) => (
-    <div key={calculation.id} className=" mb-4 p-4 border rounded-md bg-white shadow-lg">
+    <div key={calculation.id} className="mb-4 p-4 border rounded-md bg-white shadow-lg">
       <div className="flex items-center space-x-2">
         <span className="font-bold">{calculation.number}</span>
         <span className="text-gray-500 ml-4">by {calculation.username}</span>
@@ -97,12 +97,16 @@ const CalculationTree = ({ user, refresh }) => {
   );
 
   return (
-    <div className="w-full flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="w-full flex justify-center items-center mt-12 bg-gray-100">
       <div className="p-4 bg-white rounded-md shadow-md w-4/5 max-w-4xl">
         <h2 className="text-2xl font-bold mb-4 text-center">Calculation Tree</h2>
-        <div>
-          {calculations.map(renderCalculationTree)}
-        </div>
+        {calculations.length === 0 ? (
+          <p className="text-center text-gray-500">No calculations to show !!!.</p>
+        ) : (
+          <div>
+            {calculations.map(renderCalculationTree)}
+          </div>
+        )}
       </div>
     </div>
   );
