@@ -43,7 +43,7 @@ const App = () => {
                     </>
                   ) : (
                     <>
-                    <div className="flex flex-col items-center space-y-4 mt-4">
+                      <div className="flex flex-col items-center space-y-4 mt-4">
                         <p className="text-gray-700">Please log in or register to start a new calculation.</p>
                         <Link to="/login" className="text-blue-500 underline">
                           Login
@@ -53,7 +53,6 @@ const App = () => {
                         </Link>
                       </div>
                       <CalculationTree user={user} refresh={refresh} />
-                      
                     </>
                   )}
                 </div>

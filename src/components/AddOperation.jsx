@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber }) => {
+const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber, handleRefresh }) => {
   const [operation, setOperation] = useState('');
   const [number, setNumber] = useState('');
   const [error, setError] = useState('');
@@ -22,7 +22,6 @@ const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber }
     setError('');
     
     try {
-      console.log('Adding operation...', { userId: user.id, calculationId, operation, number: parseFloat(number), parentNumber });
       await axios.post('https://second-assessment-test-backend.onrender.com/operations', {
         userId: user.id,
         calculationId,
@@ -30,9 +29,8 @@ const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber }
         number: parseFloat(number),
         parentNumber
       });
-
-      console.log('Operation added successfully.');
-      refreshCalculations(); 
+      refreshCalculations();
+      handleRefresh();
       setOperation('');
       setNumber('');
     } catch (error) {

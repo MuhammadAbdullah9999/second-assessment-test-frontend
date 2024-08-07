@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddOperation from './AddOperation';
 
-const CalculationTree = ({ user }) => {
+const CalculationTree = ({ user, refresh }) => {
   const [calculations, setCalculations] = useState([]);
   const [selectedCalculationId, setSelectedCalculationId] = useState(null);
 
   const fetchCalculations = async () => {
     try {
-      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations', {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      });
+      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations');
       setCalculations(response.data);
       console.log(response.data);
     } catch (error) {
@@ -20,15 +16,9 @@ const CalculationTree = ({ user }) => {
     }
   };
 
-  const refreshCalculations = async () => {
-    console.log('Refreshing calculations...');
-    await fetchCalculations();
-    console.log('Calculations refreshed:', calculations);
-  };
-
   useEffect(() => {
     fetchCalculations();
-  }, []);
+  }, [refresh]);
 
   const handleAddOperationClick = (calculationId) => {
     setSelectedCalculationId(calculationId);
@@ -59,7 +49,7 @@ const CalculationTree = ({ user }) => {
             parentNumber={op.result}
             user={user}
             calculationId={op.id}
-            refreshCalculations={refreshCalculations}
+            refreshCalculations={refresh}
           />
         )}
       </div>
@@ -88,7 +78,7 @@ const CalculationTree = ({ user }) => {
           parentNumber={calculation.number}
           user={user}
           calculationId={calculation.id}
-          refreshCalculations={refreshCalculations}
+          refreshCalculations={refresh}
         />
       )}
     </div>
