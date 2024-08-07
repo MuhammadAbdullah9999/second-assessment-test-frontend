@@ -39,7 +39,7 @@ const App = () => {
                   {user ? (
                     <>
                       <StartCalculation user={user} handleRefresh={handleRefresh} />
-                      <CalculationTree user={user} refresh={refresh} />
+                      <CalculationTree user={user} refresh={refresh} handleRefresh={handleRefresh} />
                     </>
                   ) : (
                     <>
@@ -52,7 +52,7 @@ const App = () => {
                           Register
                         </Link>
                       </div>
-                      <CalculationTree user={user} refresh={refresh} />
+                      <CalculationTree user={user} refresh={refresh} handleRefresh={handleRefresh} />
                     </>
                   )}
                 </div>

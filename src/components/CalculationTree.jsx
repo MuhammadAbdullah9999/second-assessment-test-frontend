@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddOperation from './AddOperation';
 
-const CalculationTree = ({ user, refresh }) => {
+const CalculationTree = ({ user, refresh, handleRefresh }) => {
   const [calculations, setCalculations] = useState([]);
   const [selectedCalculationId, setSelectedCalculationId] = useState(null);
 
@@ -10,7 +10,6 @@ const CalculationTree = ({ user, refresh }) => {
     try {
       const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations');
       setCalculations(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error('Error fetching calculations:', error);
     }
@@ -49,7 +48,8 @@ const CalculationTree = ({ user, refresh }) => {
             parentNumber={op.result}
             user={user}
             calculationId={op.id}
-            refreshCalculations={refresh}
+            refreshCalculations={fetchCalculations}
+            handleRefresh={handleRefresh}
           />
         )}
       </div>
@@ -78,7 +78,8 @@ const CalculationTree = ({ user, refresh }) => {
           parentNumber={calculation.number}
           user={user}
           calculationId={calculation.id}
-          refreshCalculations={refresh}
+          refreshCalculations={fetchCalculations}
+          handleRefresh={handleRefresh}
         />
       )}
     </div>
