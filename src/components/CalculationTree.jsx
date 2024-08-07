@@ -8,7 +8,7 @@ const CalculationTree = ({ user, refresh, handleRefresh }) => {
 
   const fetchCalculations = async () => {
     try {
-      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations');
+      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations/');
       setCalculations(response.data);
     } catch (error) {
       console.error('Error fetching calculations:', error);
@@ -16,15 +16,6 @@ const CalculationTree = ({ user, refresh, handleRefresh }) => {
   };
 
   useEffect(() => {
-    // fetchCalculations();
-    const fetchCalculations = async () => {
-      try {
-        const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations/refresh');
-        setCalculations(response.data);
-      } catch (error) {
-        console.error('Error fetching calculations:', error);
-      }
-    };
     fetchCalculations();
   }, [refresh]);
 
