@@ -11,7 +11,7 @@ const App = () => {
   const [refresh, setRefresh] = useState(false);
 
   const handleRefresh = () => {
-    setRefresh(!refresh);
+    setRefresh(prev => !prev);
   };
 
   return (

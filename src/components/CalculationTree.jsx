@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddOperation from './AddOperation';
+import Loader from './Loader'; // Import the loader
 
 const CalculationTree = ({ user, refresh, handleRefresh }) => {
   const [calculations, setCalculations] = useState([]);
   const [selectedCalculationId, setSelectedCalculationId] = useState(null);
+  const [loading, setLoading] = useState(false); // State for loading
 
   const fetchCalculations = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get('https://second-assessment-test-backend.onrender.com/calculations/');
+      const response = await axios.get('https://second-assessment-backend.onrender.com/calculations/');
       setCalculations(response.data);
     } catch (error) {
       console.error('Error fetching calculations:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,9 +92,10 @@ const CalculationTree = ({ user, refresh, handleRefresh }) => {
 
   return (
     <div className="w-full flex justify-center items-center mt-12 bg-gray-100">
-      <div className="p-4 bg-white rounded-md shadow-md w-4/5 max-w-4xl">
+      {loading && <Loader />} {/* Show loader if loading */}
+      <div className={`p-4 bg-white rounded-md shadow-md w-4/5 max-w-4xl ${loading ? 'opacity-50' : ''}`}>
         <h2 className="text-2xl font-bold mb-4 text-center">Calculation Tree</h2>
-        {calculations.length === 0 ? (
+        {calculations.length === 0 && !loading ? (
           <div className="text-center text-gray-500">No calculations to show.</div>
         ) : (
           calculations.map(renderCalculationTree)

@@ -22,7 +22,7 @@ const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber, 
     setError('');
     
     try {
-      await axios.post('https://second-assessment-test-backend.onrender.com/operations', {
+      await axios.post('https://second-assessment-backend.onrender.com/operations', {
         userId: user.id,
         calculationId,
         operation,
@@ -35,7 +35,7 @@ const AddOperation = ({ user, calculationId, refreshCalculations, parentNumber, 
       setNumber('');
     } catch (error) {
       console.error('Error adding operation:', error);
-      setError('Error adding operation.');
+      setError('Please Login to add operation.');
     }
   };
 
